@@ -4,6 +4,7 @@ import json
 import smtplib
 import ssl
 import os
+#import socks
 
 load_dotenv()
 
@@ -84,6 +85,12 @@ sender = os.environ['SENDER_EMAIL']
 password = os.environ['SENDER_PASSWORD']
 receiver = os.environ['RECEIVER_EMAIL']
 context = ssl.create_default_context()
+
+# # Make the SMTP library go through a proxy (the only way to make it work in PythonAnywhere)
+# proxy_host = "proxy.server"
+# proxy_port = 3128
+# socks.setdefaultproxy(socks.HTTP, proxy_host, proxy_port)
+# socks.wrapmodule(smtplib)
 
 with smtplib.SMTP_SSL(server_name, port, context=context) as server:
     server.login(sender, password)
